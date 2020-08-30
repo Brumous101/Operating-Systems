@@ -1,0 +1,52 @@
+
+# to build:  scons
+# to clean: scons -c
+
+#example of overriding file locations:
+#env CC=arm-none-eabi-gcc LD=arm-none-eabi-ld QEMU=qemu-system-arm OBJCOPY=arm-none-eabi-objcopy /usr/local/scons-3.1.2/scons.py
+
+import os
+import subprocess
+import sys
+
+#our source files
+sourcefiles = [ "kernelasm.s", "kernelc.c", "console.c", "kprintf.c"]
+
+# c compiler
+cc = os.path.abspath( os.path.join("..","gcc","bin","arm-none-eabi-gcc") )
+
+#linker
+link = os.path.abspath( os.path.join("..","gcc","bin","arm-none-eabi-ld") )
+
+#object copier
+objcopy = os.path.abspath( os.path.join("..","gcc","bin","arm-none-eabi-objcopy") )
+
+#qemu
+qemu = r"c:\program files\qemu\qemu-system-arm"
+
+#override with environment variables, if they are set
+cc = os.getenv("CC",cc)
+link = os.getenv("LD",link)
+objcopy = os.getenv("OBJCOPY", objcopy)
+qemu = os.getenv("QEMU",qemu)
+asm = cc
+
+
+ccflags=["-O0","-Wall", "-mcpu=arm926ej-s", "-marm", "-Werror",
+    "-fno-builtin","-mgeneral-regs-only",
+    "-nostdinc", "-nostdlib", "-ffreestanding"]
+lflags=["-Map","kernelmap.txt", "-T","linkerscript.txt","-o","kernel.exe"]
+asmflags=["-c","-x","assembler-with-cpp","-mcpu=arm926ej-s"]
+qemuFlags =["-machine","integratorcp","-kernel","kernel.bin","-serial",
+    "mon:stdio", "-echr", "126" ]
+
+DefaultEnvironment(tools=[])
+env = Environment( ENV=os.environ, tools=["gcc","gnulink","as"])
+         
+env.Program(target="kernel.exe", 
+            source=sourcefiles,
+            AS=asm, ASFLAGS=asmflags, CC=cc, LINK=link, CCFLAGS=ccflags, LINKFLAGS=lflags )
+
+env.Command("kernel.bin","kernel.exe", "{} -Obinary kernel.exe kernel.bin".format(objcopy) )
+env.Command("hd.img","kernel.bin", lambda source,target,env: 0 )
+env.Command("actually run the thing", "hd.img", lambda source,target,env: subprocess.check_call( [qemu]+qemuFlags ) )
