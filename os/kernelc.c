@@ -1,4 +1,6 @@
 #include "kprintf.h"
+#include "console.h"
+
 extern char sbss;
 extern char ebss;
 
@@ -22,8 +24,17 @@ void clearBss(){
 
 void kmain(){
     clearBss();
+    console_init();
     kprintf(declaration);
 
+    unsigned short black = 0x0000;
+    unsigned short white = 0xffff;
+
+    for(int y=0; y < HEIGHT; y++)
+        for(int x=0; x < WIDTH; x++)
+            set_pixel(x, y, ( ( (x+y) & 1)?black:white ) );
+
+    kprintf("\nDONE\n");
     while(1){
     }
 }
