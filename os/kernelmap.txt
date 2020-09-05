@@ -20,28 +20,30 @@ Linker script and memory map
  *(.text)
  .text          0x00010000        0xc kernelasm.obj
                 0x00010000                start
- .text          0x0001000c      0x130 kernelc.obj
+ .text          0x0001000c      0x32c kernelc.obj
                 0x0001000c                clearBss
                 0x00010078                kmain
- .text          0x0001013c      0x154 console.obj
-                0x0001013c                serial_outchar
-                0x00010194                console_putc
-                0x000101c0                console_init
-                0x00010218                set_pixel
- .text          0x00010290     0x12f8 kprintf.obj
-                0x000102cc                va_end
-                0x00010414                kprintf
-                0x00010470                ksprintf
+ .text          0x00010338      0x2b8 console.obj
+                0x00010338                serial_outchar
+                0x00010390                console_putc
+                0x000103bc                console_init
+                0x00010414                set_background
+                0x0001048c                draw_rectangle
+                0x00010594                get_key
+ .text          0x000105f0     0x12f8 kprintf.obj
+                0x0001062c                va_end
+                0x00010774                kprintf
+                0x000107d0                ksprintf
  *(.rodata)
- .rodata        0x00011588      0x19f kernelc.obj
- *fill*         0x00011727        0x1 
- .rodata        0x00011728       0x68 kprintf.obj
+ .rodata        0x000118e8      0x1a9 kernelc.obj
+ *fill*         0x00011a91        0x3 
+ .rodata        0x00011a94       0x68 kprintf.obj
  *(.rdata)
  *(.rdata$zzz)
-                0x00011790                etext = .
-                0x00011790                _etext = .
+                0x00011afc                etext = .
+                0x00011afc                _etext = .
                 0x00012000                . = ALIGN (ABSOLUTE (.), 0x1000)
- *fill*         0x00011790      0x870 
+ *fill*         0x00011afc      0x504 
                 0x00012000                _sdata = .
                 0x00012000                sdata = .
  *(.data)

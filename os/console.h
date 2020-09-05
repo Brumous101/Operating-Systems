@@ -8,4 +8,6 @@ void serial_outchar(char c);
 //Not in notes but I added this here:
 void console_putc(char c);
 void console_init();
-void set_pixel( int x, int y, unsigned short color);
+void set_background( int x, int y, unsigned short color);
+void draw_rectangle( int x, int y, int width, int height, unsigned short color);
+char get_key();

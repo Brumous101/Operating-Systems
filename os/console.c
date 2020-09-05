@@ -1,4 +1,5 @@
 #include "console.h"
+#include "kprintf.h"
 
 #define pl110 ( (volatile unsigned*)0xc0000000 )
 #define haxis       (pl110+0)    //horizontal axis
@@ -33,7 +34,26 @@ void console_init(){
     *params = 0x1820 | 9;
 }
 
-void set_pixel( int x, int y, unsigned short color){
+void set_background( int x, int y, unsigned short color){
     framebuffer[x+(y*WIDTH)] = color;
     *baseaddr1 = (unsigned)framebuffer;
+}
+
+void draw_rectangle( int x, int y, int width, int height, unsigned short color){
+    for(int j=0; j<height;j++){
+        for(int i = x+(WIDTH*(y+j)); i<= (x+(WIDTH*(y+j))+width); i++){
+            framebuffer[i] = color;
+            *baseaddr1 = (unsigned)framebuffer;
+        }
+    }
+}
+
+char get_key(){
+    while(1){
+        unsigned fl = *serialflags;
+        if( fl & 0x40 ){
+            unsigned x = *serialport;
+            return x;
+        }
+    }
 }

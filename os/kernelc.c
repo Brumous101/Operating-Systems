@@ -22,6 +22,7 @@ void clearBss(){
     }
 }
 
+
 void kmain(){
     clearBss();
     console_init();
@@ -32,9 +33,41 @@ void kmain(){
 
     for(int y=0; y < HEIGHT; y++)
         for(int x=0; x < WIDTH; x++)
-            set_pixel(x, y, ( ( (x+y) & 1)?black:white ) );
+            set_background(x, y, ( ( (x+y) & 1)?black:white ) );
 
+    //This is the location for the rectangle. Trying to make it reuseable
+    draw_rectangle(((WIDTH-32)>>1), ((HEIGHT-32)>>1), 32, 32, black);
     kprintf("\nDONE\n");
+
+    unsigned red=0,green=0,blue=0, fivebitmask= 0b11111, sixbitmask= 0b111111;
+    unsigned short rgb;
     while(1){
+        char c = get_key();
+        if(c == 'q' && red < 31){
+            red++;
+        }
+        else if(c == 'a' && red != 0){
+            red--;
+        }
+        else if(c == 'w' && green < 63){
+            green++;
+        }
+        else if(c == 's' && green != 0){
+            green--;
+        }
+        else if(c == 'e' && blue < 31){
+            blue++;
+        }
+        else if(c == 'd' && blue != 0){
+            blue--;
+        }
+        else if(c =='i'){
+            blue = blue ^ fivebitmask;
+            green = green ^ sixbitmask;
+            red = red ^ fivebitmask;
+        }
+        rgb = ( ( ( (blue << 6) | (green) ) << 5 ) | red);
+        kprintf("\nrgb: %d", rgb);
+        draw_rectangle(((WIDTH-32)>>1), ((HEIGHT-32)>>1), 32, 32, rgb);
     }
 }
