@@ -1,0 +1,116 @@
+
+Discarded input sections
+
+ .comment       0x00000000       0x7a kernelc.obj
+ .comment       0x00000000       0x7a console.obj
+ .comment       0x00000000       0x7a kprintf.obj
+ .comment       0x00000000       0x7a font.obj
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00010000                . = 0x10000
+
+.text           0x00010000     0x600c
+                0x00010000                stext = .
+                0x00010000                _stext = .
+ *(.text)
+ .text          0x00010000        0xc kernelasm.obj
+                0x00010000                start
+ .text          0x0001000c      0x160 kernelc.obj
+                0x0001000c                clearBss
+                0x00010078                kmain
+ .text          0x0001016c      0x2b8 console.obj
+                0x0001016c                serial_outchar
+                0x000101c4                console_putc
+                0x000101f0                console_init
+                0x00010248                setPixel
+                0x000102c0                draw_rectangle
+                0x000103c8                get_key
+ .text          0x00010424     0x12f8 kprintf.obj
+                0x00010460                va_end
+                0x000105a8                kprintf
+                0x00010604                ksprintf
+ .text          0x0001171c       0xf4 font.obj
+                0x0001171c                drawCharacter
+ *(.rodata)
+ .rodata        0x00011810     0x219f kernelc.obj
+ *fill*         0x000139af        0x1 
+ .rodata        0x000139b0       0x68 kprintf.obj
+ .rodata        0x00013a18     0x2000 font.obj
+ *(.rdata)
+ *(.rdata$zzz)
+                0x00015a18                etext = .
+                0x00015a18                _etext = .
+                0x00016000                . = ALIGN (ABSOLUTE (.), 0x1000)
+ *fill*         0x00015a18      0x5e8 
+                0x00016000                _sdata = .
+                0x00016000                sdata = .
+ *(.data)
+ .data          0x00016000        0x0 kernelasm.obj
+ .data          0x00016000        0x4 kernelc.obj
+                0x00016000                declaration
+ .data          0x00016004        0x8 console.obj
+ .data          0x0001600c        0x0 kprintf.obj
+ .data          0x0001600c        0x0 font.obj
+                0x0001600c                _edata = .
+                0x0001600c                edata = .
+                0x0001600c                _sbss = .
+                0x0001600c                sbss = .
+ *(COMMON)
+ *(.bss)
+ .bss           0x0001600c        0x0 kernelasm.obj
+ .bss           0x0001600c        0x0 kernelc.obj
+ .bss           0x0001600c        0x0 console.obj
+ .bss           0x0001600c        0x0 kprintf.obj
+ .bss           0x0001600c        0x0 font.obj
+                0x0001600c                _ebss = .
+                0x0001600c                ebss = .
+
+.glue_7         0x0001600c        0x0
+ .glue_7        0x0001600c        0x0 linker stubs
+
+.glue_7t        0x0001600c        0x0
+ .glue_7t       0x0001600c        0x0 linker stubs
+
+.vfp11_veneer   0x0001600c        0x0
+ .vfp11_veneer  0x0001600c        0x0 linker stubs
+
+.v4_bx          0x0001600c        0x0
+ .v4_bx         0x0001600c        0x0 linker stubs
+
+.iplt           0x0001600c        0x0
+ .iplt          0x0001600c        0x0 kernelasm.obj
+
+.igot.plt       0x0001600c        0x0
+ .igot.plt      0x0001600c        0x0 kernelasm.obj
+
+.rel.dyn        0x0001600c        0x0
+ .rel.iplt      0x0001600c        0x0 kernelasm.obj
+
+/DISCARD/
+ *(.eh_frame)
+ *(.comment)
+LOAD kernelasm.obj
+LOAD kernelc.obj
+LOAD console.obj
+LOAD kprintf.obj
+LOAD font.obj
+OUTPUT(kernel.exe elf32-littlearm)
+
+.ARM.attributes
+                0x00000000       0x28
+ .ARM.attributes
+                0x00000000       0x1c kernelasm.obj
+ .ARM.attributes
+                0x0000001c       0x2c kernelc.obj
+ .ARM.attributes
+                0x00000048       0x2c console.obj
+ .ARM.attributes
+                0x00000074       0x2c kprintf.obj
+ .ARM.attributes
+                0x000000a0       0x2c font.obj

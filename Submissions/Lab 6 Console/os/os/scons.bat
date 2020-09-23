@@ -1,0 +1,1 @@
+set path="C:\Users\Brumo\AppData\Local\Programs\Python\Python38";%path%..\scons\scons %*

@@ -1,7 +1,5 @@
 #include "kprintf.h"
 #include "console.h"
-#include "font.h"
-#include "testsuite.h"
 
 extern char sbss;
 extern char ebss;
@@ -35,26 +33,15 @@ void kmain(){
 
     for(int y=0; y < HEIGHT; y++)
         for(int x=0; x < WIDTH; x++)
-            setPixel(x, y, ( ( (x+y) & 1)?black:white ) );
+            set_background(x, y, ( ( (x+y) & 1)?black:white ) );
 
     //This is the location for the rectangle. Trying to make it reuseable
-    //draw_rectangle(((WIDTH-32)>>1), ((HEIGHT-32)>>1), 32, 32, black);
-    
-    //drawCharacter( 'O', 100, 200);
-    //drawCharacter( 'S', 110, 200);
-    //drawCharacter( '1', 120, 200);
-    
-    //unsigned red=0,green=0,blue=0, fivebitmask= 0b11111, sixbitmask= 0b111111;
-    //unsigned short rgb;
-    sweet();
-    serial_outchar('\n');
-    serial_outchar('D');
-    serial_outchar('O');
-    serial_outchar('N');
-    serial_outchar('E');
-    serial_outchar('\n');
-    
-    while(1){/*
+    draw_rectangle(((WIDTH-32)>>1), ((HEIGHT-32)>>1), 32, 32, black);
+    kprintf("\nDONE\n");
+
+    unsigned red=0,green=0,blue=0, fivebitmask= 0b11111, sixbitmask= 0b111111;
+    unsigned short rgb;
+    while(1){
         char c = get_key();
         if(c == 'q' && red < 31){
             red++;
@@ -82,6 +69,5 @@ void kmain(){
         rgb = ( ( ( (blue << 6) | (green) ) << 5 ) | red);
         kprintf("\nrgb: %d", rgb);
         draw_rectangle(((WIDTH-32)>>1), ((HEIGHT-32)>>1), 32, 32, rgb);
-        */
     }
 }

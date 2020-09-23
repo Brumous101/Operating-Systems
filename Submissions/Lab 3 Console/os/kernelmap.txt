@@ -1,0 +1,105 @@
+
+Discarded input sections
+
+ .comment       0x00000000       0x7a kernelc.obj
+ .comment       0x00000000       0x7a console.obj
+ .comment       0x00000000       0x7a kprintf.obj
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00010000                . = 0x10000
+
+.text           0x00010000     0x200c
+                0x00010000                stext = .
+                0x00010000                _stext = .
+ *(.text)
+ .text          0x00010000        0xc kernelasm.obj
+                0x00010000                start
+ .text          0x0001000c      0x130 kernelc.obj
+                0x0001000c                clearBss
+                0x00010078                kmain
+ .text          0x0001013c      0x154 console.obj
+                0x0001013c                serial_outchar
+                0x00010194                console_putc
+                0x000101c0                console_init
+                0x00010218                set_pixel
+ .text          0x00010290     0x12f8 kprintf.obj
+                0x000102cc                va_end
+                0x00010414                kprintf
+                0x00010470                ksprintf
+ *(.rodata)
+ .rodata        0x00011588      0x19f kernelc.obj
+ *fill*         0x00011727        0x1 
+ .rodata        0x00011728       0x68 kprintf.obj
+ *(.rdata)
+ *(.rdata$zzz)
+                0x00011790                etext = .
+                0x00011790                _etext = .
+                0x00012000                . = ALIGN (ABSOLUTE (.), 0x1000)
+ *fill*         0x00011790      0x870 
+                0x00012000                _sdata = .
+                0x00012000                sdata = .
+ *(.data)
+ .data          0x00012000        0x0 kernelasm.obj
+ .data          0x00012000        0x4 kernelc.obj
+                0x00012000                declaration
+ .data          0x00012004        0x8 console.obj
+ .data          0x0001200c        0x0 kprintf.obj
+                0x0001200c                _edata = .
+                0x0001200c                edata = .
+                0x0001200c                _sbss = .
+                0x0001200c                sbss = .
+ *(COMMON)
+ *(.bss)
+ .bss           0x0001200c        0x0 kernelasm.obj
+ .bss           0x0001200c        0x0 kernelc.obj
+ .bss           0x0001200c        0x0 console.obj
+ .bss           0x0001200c        0x0 kprintf.obj
+                0x0001200c                _ebss = .
+                0x0001200c                ebss = .
+
+.glue_7         0x0001200c        0x0
+ .glue_7        0x0001200c        0x0 linker stubs
+
+.glue_7t        0x0001200c        0x0
+ .glue_7t       0x0001200c        0x0 linker stubs
+
+.vfp11_veneer   0x0001200c        0x0
+ .vfp11_veneer  0x0001200c        0x0 linker stubs
+
+.v4_bx          0x0001200c        0x0
+ .v4_bx         0x0001200c        0x0 linker stubs
+
+.iplt           0x0001200c        0x0
+ .iplt          0x0001200c        0x0 kernelasm.obj
+
+.igot.plt       0x0001200c        0x0
+ .igot.plt      0x0001200c        0x0 kernelasm.obj
+
+.rel.dyn        0x0001200c        0x0
+ .rel.iplt      0x0001200c        0x0 kernelasm.obj
+
+/DISCARD/
+ *(.eh_frame)
+ *(.comment)
+LOAD kernelasm.obj
+LOAD kernelc.obj
+LOAD console.obj
+LOAD kprintf.obj
+OUTPUT(kernel.exe elf32-littlearm)
+
+.ARM.attributes
+                0x00000000       0x28
+ .ARM.attributes
+                0x00000000       0x1c kernelasm.obj
+ .ARM.attributes
+                0x0000001c       0x2c kernelc.obj
+ .ARM.attributes
+                0x00000048       0x2c console.obj
+ .ARM.attributes
+                0x00000074       0x2c kprintf.obj
