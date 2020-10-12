@@ -2,7 +2,6 @@
 Allocating common symbols
 Common symbol       size              file
 
-fileTable           0x80              disk.obj
 vbr                 0x200             disk.obj
 
 Discarded input sections
@@ -24,7 +23,7 @@ Linker script and memory map
 
                 0x00010000                . = 0x10000
 
-.text           0x00010000     0xb2a0
+.text           0x00010000     0xb22c
                 0x00010000                stext = .
                 0x00010000                _stext = .
  *(.text)
@@ -51,38 +50,34 @@ Linker script and memory map
                 0x00010920                ksprintf
  .text          0x00011a38       0xf4 font.obj
                 0x00011a38                drawCharacter
- .text          0x00011b2c     0x13fc disk.obj
+ .text          0x00011b2c      0xec0 disk.obj
                 0x00011b2c                disk_init
-                0x00011c74                isBusy
-                0x00011c9c                disk_read_sector
-                0x00011dac                disk_write_sector
-                0x00011eb4                clusterNumberToSectorNumber
-                0x00011f74                readCluster
-                0x00012004                directories
-                0x00012a40                file_open
-                0x00012bc8                file_close
-                0x00012c68                stringEquals
-                0x00012d98                get_file
- .text          0x00012f28       0x84 utility.obj
-                0x00012f28                kmemcpy
- .text          0x00012fac      0x394 testsuite.obj
-                0x00012fac                sweet
+                0x00011c20                isBusy
+                0x00011c48                disk_read_sector
+                0x00011d58                disk_write_sector
+                0x00011e60                clusterNumberToSectorNumber
+                0x00011f20                readCluster
+                0x00011fb0                directories
+ .text          0x000129ec       0x84 utility.obj
+                0x000129ec                kmemcpy
+ .text          0x00012a70      0x17c testsuite.obj
+                0x00012a70                sweet
  *(.rodata)
- .rodata        0x00013340     0x2197 kernelc.obj
- *fill*         0x000154d7        0x1 
- .rodata        0x000154d8     0x2005 console.obj
- *fill*         0x000174dd        0x3 
- .rodata        0x000174e0       0x68 kprintf.obj
- .rodata        0x00017548     0x2000 font.obj
- .rodata        0x00019548       0x2e disk.obj
- *fill*         0x00019576        0x2 
- .rodata        0x00019578      0x1e4 testsuite.obj
+ .rodata        0x00012bec     0x2197 kernelc.obj
+ *fill*         0x00014d83        0x1 
+ .rodata        0x00014d84     0x2005 console.obj
+ *fill*         0x00016d89        0x3 
+ .rodata        0x00016d8c       0x68 kprintf.obj
+ .rodata        0x00016df4     0x2000 font.obj
+ .rodata        0x00018df4       0x2e disk.obj
+ *fill*         0x00018e22        0x2 
+ .rodata        0x00018e24     0x107f testsuite.obj
  *(.rdata)
  *(.rdata$zzz)
-                0x0001975c                etext = .
-                0x0001975c                _etext = .
+                0x00019ea3                etext = .
+                0x00019ea3                _etext = .
                 0x0001a000                . = ALIGN (ABSOLUTE (.), 0x1000)
- *fill*         0x0001975c      0x8a4 
+ *fill*         0x00019ea3      0x15d 
                 0x0001a000                _sdata = .
                 0x0001a000                sdata = .
  *(.data)
@@ -96,48 +91,50 @@ Linker script and memory map
                 0x0001a00c                de
                 0x0001a010                le
  .data          0x0001a014        0x0 utility.obj
- .data          0x0001a014        0x0 testsuite.obj
-                0x0001a014                _edata = .
-                0x0001a014                edata = .
-                0x0001a014                _sbss = .
-                0x0001a014                sbss = .
+ .data          0x0001a014        0xc testsuite.obj
+                0x0001a014                decl
+                0x0001a018                decl2
+                0x0001a01c                phrase
+                0x0001a020                _edata = .
+                0x0001a020                edata = .
+                0x0001a020                _sbss = .
+                0x0001a020                sbss = .
  *(COMMON)
- COMMON         0x0001a014      0x280 disk.obj
-                0x0001a014                fileTable
-                0x0001a094                vbr
+ COMMON         0x0001a020      0x200 disk.obj
+                0x0001a020                vbr
  *(.bss)
- .bss           0x0001a294        0x0 kernelasm.obj
- .bss           0x0001a294        0x0 kernelc.obj
- .bss           0x0001a294        0xc console.obj
-                0x0001a29c                escflag
- .bss           0x0001a2a0        0x0 kprintf.obj
- .bss           0x0001a2a0        0x0 font.obj
- .bss           0x0001a2a0     0x1000 disk.obj
- .bss           0x0001b2a0        0x0 utility.obj
- .bss           0x0001b2a0        0x0 testsuite.obj
-                0x0001b2a0                _ebss = .
-                0x0001b2a0                ebss = .
+ .bss           0x0001a220        0x0 kernelasm.obj
+ .bss           0x0001a220        0x0 kernelc.obj
+ .bss           0x0001a220        0xc console.obj
+                0x0001a228                escflag
+ .bss           0x0001a22c        0x0 kprintf.obj
+ .bss           0x0001a22c        0x0 font.obj
+ .bss           0x0001a22c     0x1000 disk.obj
+ .bss           0x0001b22c        0x0 utility.obj
+ .bss           0x0001b22c        0x0 testsuite.obj
+                0x0001b22c                _ebss = .
+                0x0001b22c                ebss = .
 
-.glue_7         0x0001b2a0        0x0
- .glue_7        0x0001b2a0        0x0 linker stubs
+.glue_7         0x0001b22c        0x0
+ .glue_7        0x0001b22c        0x0 linker stubs
 
-.glue_7t        0x0001b2a0        0x0
- .glue_7t       0x0001b2a0        0x0 linker stubs
+.glue_7t        0x0001b22c        0x0
+ .glue_7t       0x0001b22c        0x0 linker stubs
 
-.vfp11_veneer   0x0001b2a0        0x0
- .vfp11_veneer  0x0001b2a0        0x0 linker stubs
+.vfp11_veneer   0x0001b22c        0x0
+ .vfp11_veneer  0x0001b22c        0x0 linker stubs
 
-.v4_bx          0x0001b2a0        0x0
- .v4_bx         0x0001b2a0        0x0 linker stubs
+.v4_bx          0x0001b22c        0x0
+ .v4_bx         0x0001b22c        0x0 linker stubs
 
-.iplt           0x0001b2a0        0x0
- .iplt          0x0001b2a0        0x0 kernelasm.obj
+.iplt           0x0001b22c        0x0
+ .iplt          0x0001b22c        0x0 kernelasm.obj
 
-.igot.plt       0x0001b2a0        0x0
- .igot.plt      0x0001b2a0        0x0 kernelasm.obj
+.igot.plt       0x0001b22c        0x0
+ .igot.plt      0x0001b22c        0x0 kernelasm.obj
 
-.rel.dyn        0x0001b2a0        0x0
- .rel.iplt      0x0001b2a0        0x0 kernelasm.obj
+.rel.dyn        0x0001b22c        0x0
+ .rel.iplt      0x0001b22c        0x0 kernelasm.obj
 
 /DISCARD/
  *(.eh_frame)

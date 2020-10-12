@@ -14,7 +14,7 @@ sys.path.append( foolpath )
 import fool
 import testsuite
 def makeDisk():
-    fool.go( ["hd.img","create","64", ])
+    fool.go( ["hd.img","create","64"] )
     testsuite.copy(fool)
 
 

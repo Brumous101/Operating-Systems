@@ -1,7 +1,5 @@
 #include "disk.h"
 #include "kprintf.h"
-#include "errno.h"
-#include "utility.h"
 
 #define MMCP_START ((volatile unsigned*) 0x1c000000 )
 #define POWER ( MMCP_START)
@@ -90,16 +88,9 @@ struct LFNEntry {
 };
 #pragma pack(pop)
 
-struct File{
-    int flags;
-    int in_use;
-};
-#define MAX_FILES 16
-
 //512 is the size of the sector, you can count the size of all the data types individually and you will see its 512
 
 struct VBR vbr; //VBR is the name of the structure, vbr is the variable name
-struct File fileTable[MAX_FILES];
 
 
 void disk_init(){
@@ -119,11 +110,6 @@ void disk_init(){
 
     disk_read_sector(0, &vbr);
     kprintf("%s\n", vbr.label);
-
-    for(int i=0; i <= MAX_FILES;i++){
-        fileTable[i].in_use = 0;
-        fileTable[i].flags= 0;
-    }
 }
 
 int isBusy(){
@@ -301,94 +287,5 @@ void directories(){
                 }
         }
         kprintf("\n");
-    }
-}
-
-int file_open(const char* fname, int flags){
-    //does file exist (scan root directory), permissions, file table full?
-    //get_files();
-    //is this a file?
-    readCluster(2, clusterbuffer);
-    int j = 0;
-    int k = 0;
-    char file[13];
-    for(int h = 0; de[h].base[0]; h++){
-        get_file(file, h);//This will format the string at a directory and apply it to the "file[13]" variable
-        k = stringEquals(file,fname);
-        if(k)
-            break;
-    }
-
-    if(k==0)
-        return -ENOENT;
-
-    for(int i = 0; i<=MAX_FILES; i++){
-        if(j ==0 && i == MAX_FILES){
-            return -EMFILE;
-        }
-        else if(j ==0 && fileTable[i].in_use == 0){
-            j = 1;
-            fileTable[i].in_use = 1;
-            fileTable[i].flags = flags;
-            if(i == 0){
-                return 1;
-            }
-            return i;
-        }
-    }
-    return 1;
-}
-
-int file_close(int fd){
-    readCluster(2, clusterbuffer);
-    if(fd < 0 && fd >= MAX_FILES){
-        return -1;
-    }
-    if(fileTable[fd].in_use == 1){
-        fileTable[fd].in_use = 0;
-        fileTable[fd].flags = 0;
-        return SUCCESS;
-    }
-    return -1;
-}
-
-int stringEquals(const char* s1,const char* s2){
-    for(int i=0; (s1[i] != 0) || (s2[i] != 0); i++){
-        char c1 = s1[i];
-        char c2 = s2[i];
-        if(c1 >= 'a' && c1 <= 'z')
-            c1 -= 32;//ASCII lowercase and capital letters are 32 apart (a = 97, A =65)
-        //compare c1 and c2
-        if(c2 >= 'a' && c2 <= 'z')
-            c2 -= 32;//ASCII lowercase and capital letters are 32 apart (a = 97, A =65)
-        if(c1 != c2)
-            return 0;
-        if((s1[i] == 0) && (s2[i] != 0))
-            return 0;
-    }
-    return 1;
-}
-
-void get_file(char file[], int j){/*the caller needs to send file[13]*/
-    //You need to pass the j into this and then this will change the parameter that us being passed. you cant return it as a val in c
-    readCluster(2, clusterbuffer);
-    //char file[13];
-    if(de[j].attributes != 15){
-        int i, h;
-        for ( i = 0; i < 8; i++ ){
-            if(de[j].base[i] == 32){
-                break;
-            }
-        }
-        for ( h = 0; h < 3; h++ ){
-            if(de[j].ext[h] == 32){
-                break;
-            }
-        }
-        //sizeof is a compile time operator we would need a runtime operator
-        kmemcpy(file, de[j].base, i);
-        file[i]='.';
-        kmemcpy(&file[i+1], de[j].ext, h);
-        file[i+h+1] ='\0';//'\0' is the same as file[i+h+1] = 0
     }
 }

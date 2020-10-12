@@ -67,10 +67,7 @@ void kmain(){
     //32 bytes in a directory
     
     //
-    //directories();
-    sweet();
-    
-
+    directories();
 
     
 
