@@ -86,22 +86,21 @@ Linker script and memory map
                 0x0001432c                handler_irq
                 0x0001434c                handler_fiq
  *(.rodata)
- .rodata        0x0001436c     0x21a9 kernelc.obj
- *fill*         0x00016515        0x3 
- .rodata        0x00016518     0x2005 console.obj
- *fill*         0x0001851d        0x3 
- .rodata        0x00018520       0x68 kprintf.obj
- .rodata        0x00018588     0x2000 font.obj
- .rodata        0x0001a588       0x2e disk.obj
- *fill*         0x0001a5b6        0x2 
- .rodata        0x0001a5b8      0xd38 testsuite.obj
- .rodata        0x0001b2f0       0x48 interrupt.obj
+ .rodata        0x0001436c     0x21a8 kernelc.obj
+ .rodata        0x00016514     0x2005 console.obj
+ *fill*         0x00018519        0x3 
+ .rodata        0x0001851c       0x68 kprintf.obj
+ .rodata        0x00018584     0x2000 font.obj
+ .rodata        0x0001a584       0x2e disk.obj
+ *fill*         0x0001a5b2        0x2 
+ .rodata        0x0001a5b4      0xd38 testsuite.obj
+ .rodata        0x0001b2ec       0x48 interrupt.obj
  *(.rdata)
  *(.rdata$zzz)
-                0x0001b338                etext = .
-                0x0001b338                _etext = .
+                0x0001b334                etext = .
+                0x0001b334                _etext = .
                 0x0001c000                . = ALIGN (ABSOLUTE (.), 0x1000)
- *fill*         0x0001b338      0xcc8 
+ *fill*         0x0001b334      0xccc 
                 0x0001c000                _sdata = .
                 0x0001c000                sdata = .
  *(.data)

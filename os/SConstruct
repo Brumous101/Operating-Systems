@@ -44,7 +44,7 @@ asm = cc
 ccflags=["-O0","-Wall", "-mcpu=arm926ej-s", "-marm", "-Werror",
     "-fno-builtin","-mgeneral-regs-only",
     "-nostdinc", "-nostdlib", "-ffreestanding"]
-ccflags += [ "-DINTERRUPT_TEST=" + os.getenv("INTERRUPT_TEST", "1" ) ]
+ccflags += [ "-DINTERRUPT_TEST=" + os.getenv("INTERRUPT_TEST", "2" ) ]
 lflags=["-Map","kernelmap.txt", "-T","linkerscript.txt","-o","kernel.exe"]
 asmflags=["-c","-x","assembler-with-cpp","-mcpu=arm926ej-s"]
 qemuFlags =["-machine","integratorcp","-kernel","kernel.bin","-serial",

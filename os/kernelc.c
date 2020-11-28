@@ -81,27 +81,7 @@ void kmain(){
     #elif INTERRUPT_TEST == 2
     kprintf("undefined test\n");
     asm volatile(".word 0xf7f0a000");
-    /*
-    #elif INTERRUPT_TEST == 3
-    kprintf("svc test\n");
-    asm volatile("svc");
-    #elif INTERRUPT_TEST == 4
-    kprintf("prefetchabort test\n");
-    asm volatile("prefetchabort");
-    #elif INTERRUPT_TEST == 5
-    kprintf("dataabort test\n");
-    asm volatile("dataabort");
-    #elif INTERRUPT_TEST == 6
-    kprintf("reserved test\n");
-    asm volatile("reserved");
-    #elif INTERRUPT_TEST == 7
-    kprintf("irq test\n");
-    asm volatile("irq");
-    #elif INTERRUPT_TEST == 8
-    kprintf("fiq test\n");
-    asm volatile("fiq");
     #endif
-    */
 
     /*
     readCluster(3, clusterbuffer);
