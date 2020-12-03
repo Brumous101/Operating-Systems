@@ -21,7 +21,7 @@ def makeDisk():
     fool.go( ["hd.img","ls" ])
 
 #our source files
-sourcefiles = [ "kernelasm.s", "kernelc.c", "console.c", "kprintf.c", "font.c", "disk.c", "utility.c", "testsuite.c", "interrupt.c"]
+sourcefiles = [ "kernelasm.s", "kernelc.c", "console.c", "kprintf.c", "font.c", "disk.c", "utility.c", "testsuite.c", "interrupt.c", "crtc.c", "crtasm.s", "userex.c", "exec.c"]
 
 # c compiler
 cc = os.path.abspath( os.path.join("..","gcc","bin","arm-none-eabi-gcc") )
@@ -47,18 +47,39 @@ ccflags=["-O0","-Wall", "-mcpu=arm926ej-s", "-marm", "-Werror",
     "-fno-builtin","-mgeneral-regs-only",
     "-nostdinc", "-nostdlib", "-ffreestanding"]
 ccflags += [ "-DINTERRUPT_TEST=" + os.getenv("INTERRUPT_TEST", "2" ) ]
-lflags=["-Map","kernelmap.txt", "-T","linkerscript.txt","-o","kernel.exe"]
+#Pre Executables lab script
+#lflags=["-Map","kernelmap.txt", "-T","linkerscript.txt","-o","kernel.exe"]
+#Post Executables lab script
+lflags=["-Map","kernelmap.txt", "-T","linkerscript2.txt","-o","kernel.exe"]
+
 asmflags=["-c","-x","assembler-with-cpp","-mcpu=arm926ej-s"]
 qemuFlags =["-machine","integratorcp","-kernel","kernel.bin","-serial",
     "mon:stdio", "-echr", "126", "-sd", "hd.img" ]
 
-DefaultEnvironment(tools=[])
-env = Environment( ENV=os.environ, tools=["gcc","gnulink","as"])
-         
-env.Program(target="kernel.exe", 
+env = Environment( ENV=os.environ,
+    tools=["gcc","gnulink","as"])
+
+userccflags = ccflags + ["-static-pie","-fPIE"]
+env.StaticObject( "crtasm.o", "crtasm.s",
+    AS=asm, ASFLAGS=asmflags, CC=cc,
+    LINK=link, CCFLAGS=userccflags)
+env.StaticObject( "crtc.o", "crtc.c",
+    AS=asm, ASFLAGS=asmflags, CC=cc,
+    LINK=link, CCFLAGS=userccflags)
+
+def makeUserExe(stem):
+    env.Program(target=stem+".exe",
+        source=["crtasm.o","crtc.o",stem+".c"],
+        AS=asm, ASFLAGS=asmflags, CC=cc,
+        LINK=link, CCFLAGS=userccflags,
+        LINKFLAGS=["-T","linkerscript2.txt","-o",stem+".exe"] )
+    env.Command(stem+".bin",stem+".exe",
+        "{} -Obinary {}.exe {}.bin".format(objcopy,stem,stem) )
+
+env.Program(target="kernel.exe",
             source=sourcefiles,
             AS=asm, ASFLAGS=asmflags, CC=cc, LINK=link, CCFLAGS=ccflags, LINKFLAGS=lflags )
-
 env.Command("kernel.bin","kernel.exe", "{} -Obinary kernel.exe kernel.bin".format(objcopy) )
-env.Command("hd.img","kernel.bin", lambda source,target,env: makeDisk() )
+makeUserExe("userex")
+env.Command("hd.img", ["kernel.bin","userex.bin"], lambda source,target,env: makeDisk() )
 env.Command("actually run the thing", "hd.img", lambda source,target,env: subprocess.check_call( [qemu]+qemuFlags ) )
