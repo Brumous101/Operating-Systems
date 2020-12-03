@@ -101,8 +101,12 @@ struct File{
 
 //512 is the size of the sector, you can count the size of all the data types individually and you will see its 512
 
+static char clusterbuffer[4096];
 struct VBR vbr; //VBR is the name of the structure, vbr is the variable name
 struct File fileTable[MAX_FILES];
+struct File * fp;
+struct DirEntry* de = (struct DirEntry*) &(clusterbuffer[0]);
+struct LFNEntry* le = (struct LFNEntry*) &(clusterbuffer[0]);
 
 
 void disk_init(){
@@ -123,12 +127,13 @@ void disk_init(){
     disk_read_sector(0, &vbr);
     kprintf("%s\n", vbr.label);
 
-    for(int i=0; i <= MAX_FILES;i++){
+    for(int i=0; i < MAX_FILES;i++){
         fileTable[i].in_use = 0;
         fileTable[i].flags = 0;
         fileTable[i].offset = 0;
         fileTable[i].size = 0;
     }
+    //kprintf("123 %d 321", vbr.sectors_per_cluster);
 }
 
 int isBusy(){
@@ -137,6 +142,10 @@ int isBusy(){
 }
 
 void disk_read_sector(unsigned sector, void* datablock){
+    //JH
+    //kprintf("READ SECTOR %d\n",sector);
+
+
     *DATA_TIMER = 100;
     *DATA_LENGTH = 512;
     *DATA_CONTROL = 1 | (1<<1) | (9<<4);
@@ -150,6 +159,11 @@ void disk_read_sector(unsigned sector, void* datablock){
             ;   //the FIFO is empty
         *CLEAR = 0x3ff;
         unsigned v = *DATA_FIFO;
+
+        //JH
+        //char* x = (char*) &v;
+        //kprintf("%c%c%c%c",x[0],x[1],x[2],x[3]);
+
         *p = v;
         p++;
     }
@@ -182,15 +196,13 @@ unsigned clusterNumberToSectorNumber( unsigned clnum )
 
 void readCluster( unsigned clnum, void* p)
 {
+    //kprintf("%d", vbr.sectors_per_cluster);   
     unsigned sectorNum = clusterNumberToSectorNumber( clnum );
     //kprintf("%d", sectorNum);
     for(int i = 0; i < vbr.sectors_per_cluster; i++){
         disk_read_sector((sectorNum + i), (char *)p + (512 * i));
     }
 }
-static char clusterbuffer[4096];
-struct DirEntry* de = (struct DirEntry*) &(clusterbuffer[0]);
-struct LFNEntry* le = (struct LFNEntry*) &(clusterbuffer[0]);
 
 void directories(){
     readCluster(2, clusterbuffer);
@@ -310,16 +322,21 @@ void directories(){
 }
 
 int file_open(const char* fname, int flags){
+    //kprintf("%s", fname);
     //does file exist (scan root directory), permissions, file table full?
     //get_files();
     //is this a file?
     readCluster(2, clusterbuffer);
+    //kprintf("//////////////////////\n");
+    //kprintf("%d \n", clusterbuffer[0]);
+    //kprintf("//////////////////////\n");
     int j = 0;
     int k = 0;
     char file[13];
     for(int h = 0; de[h].base[0]; h++){
         get_file(file, h);//This will format the string at a directory and apply it to the "file[13]" variable
         k = stringEquals(file,fname);
+        //kprintf("%s\n", file);
         if(k)
             break;
     }
@@ -335,6 +352,8 @@ int file_open(const char* fname, int flags){
             j = 1;
             fileTable[i].in_use = 1;
             fileTable[i].flags = flags;
+            fileTable[i].offset = 0;
+            fileTable[i].size = de[i].size;
             if(i == 0){
                 return 1;
             }
@@ -352,6 +371,8 @@ int file_close(int fd){
     if(fileTable[fd].in_use == 1){
         fileTable[fd].in_use = 0;
         fileTable[fd].flags = 0;
+        fileTable[fd].offset = 0;
+        fileTable[fd].size = 0;
         return SUCCESS;
     }
     return -1;
@@ -399,16 +420,33 @@ void get_file(char file[], int j){/*the caller needs to send file[13]*/
 }
 
 int file_read(int fd, void* buf, int count){
-    //11-26-20 Starting on interrupts 1&2
-    /*
+    fp = &fileTable[fd];
+    fp -> firstCluster = ((de[fd].clusterHigh << 16) | (de[fd].clusterLow));
+    int offsetInBuffer = fp->offset;
+    int totalSizeOfFile = fp->size;
+    int bytesLeftInFile= totalSizeOfFile - offsetInBuffer;
+    int numToCopy = 0;
+    short BYTES_PER_CLUSTER = vbr.bytes_per_sector *  vbr.sectors_per_cluster;
+    unsigned remaining = BYTES_PER_CLUSTER - offsetInBuffer;
     if( (count <= 0) || (fileTable[fd].offset >= fileTable[fd].size) )
         return 0;
-
-    de[fd].clusterHigh >> 48;*/
-    return 1;
+    if( (fd < 0 && fd >= MAX_FILES) || !buf/*null buffer*/ || count < 0){
+        return -1;
+    }
+    readCluster(fp->firstCluster, clusterbuffer);
+    numToCopy = ( remaining < count ) ? remaining : count;  //end of user buffer
+    //if(sizeof(buf) < bytesLeftInFile){//case 1 user buffer is smaller than file. IE they give 4 kb buffer and file is 2kb big
+        //return numToCopy;
+    //}
+    //fd = file descriptor, buf = filled with amt of data we have, count is how much capacity we have?
+    
+    numToCopy = (numToCopy < bytesLeftInFile) ? numToCopy : bytesLeftInFile;//end of file
+    kmemcpy( buf, clusterbuffer + offsetInBuffer , numToCopy );
+    //kprintf("%d", sizeof(buf));
+    return count;
 }
 int file_write(int fd, const void* buf, int count){
-    return 1;
+    return -1; //no such system call
 }
 int file_seek(int fd, int offset, int whence){
     return 1;

@@ -2,6 +2,7 @@
 Allocating common symbols
 Common symbol       size              file
 
+fp                  0x4               disk.obj
 fileTable           0x140             disk.obj
 vbr                 0x200             disk.obj
 
@@ -25,7 +26,7 @@ Linker script and memory map
 
                 0x00010000                . = 0x10000
 
-.text           0x00010000    0x15440
+.text           0x00010000    0x15444
                 0x00010000                stext = .
                 0x00010000                _stext = .
  *(.text)
@@ -33,74 +34,75 @@ Linker script and memory map
                 0x00010000                start
                 0x0001000c                interrupt_table_begin
                 0x0001004c                interrupt_table_end
- .text          0x00010128       0xfc kernelc.obj
+ .text          0x00010128       0xec kernelc.obj
                 0x00010128                clearBss
                 0x00010194                kmain
- .text          0x00010224      0x648 console.obj
-                0x00010224                serial_outchar
-                0x0001027c                console_putc
-                0x0001051c                check_column_length
-                0x00010564                check_row_length
-                0x00010598                scroll
-                0x000105e8                console_init
-                0x00010640                setPixel
-                0x000106b8                draw_rectangle
-                0x000107c0                get_key
-                0x0001081c                console_clear_screen
-                0x00010850                gulp
- .text          0x0001086c     0x12f8 kprintf.obj
-                0x000108a8                va_end
-                0x000109f0                kprintf
-                0x00010a4c                ksprintf
- .text          0x00011b64       0xf4 font.obj
-                0x00011b64                drawCharacter
- .text          0x00011c58     0x155c disk.obj
-                0x00011c58                disk_init
-                0x00011e14                isBusy
-                0x00011e3c                disk_read_sector
-                0x00011f4c                disk_write_sector
-                0x00012054                clusterNumberToSectorNumber
-                0x00012114                readCluster
-                0x000121a4                directories
-                0x00012be0                file_open
-                0x00012d9c                file_close
-                0x00012e70                stringEquals
-                0x00012fa0                get_file
-                0x00013130                file_read
-                0x0001315c                file_write
-                0x00013188                file_seek
- .text          0x000131b4       0x90 utility.obj
-                0x000131b4                kmemcpy
-                0x00013238                halt
- .text          0x00013244      0xff4 testsuite.obj
-                0x00013244                readFully
-                0x000132f8                sweet
- .text          0x00014238      0x134 interrupt.obj
-                0x00014238                interrupt_init
-                0x0001426c                handler_reset
-                0x0001428c                handler_undefined
-                0x000142ac                handler_svc
-                0x000142cc                handler_prefetchabort
-                0x000142ec                handler_dataabort
-                0x0001430c                handler_reserved
-                0x0001432c                handler_irq
-                0x0001434c                handler_fiq
+ .text          0x00010214      0x648 console.obj
+                0x00010214                serial_outchar
+                0x0001026c                console_putc
+                0x0001050c                check_column_length
+                0x00010554                check_row_length
+                0x00010588                scroll
+                0x000105d8                console_init
+                0x00010630                setPixel
+                0x000106a8                draw_rectangle
+                0x000107b0                get_key
+                0x0001080c                console_clear_screen
+                0x00010840                gulp
+ .text          0x0001085c     0x12f8 kprintf.obj
+                0x00010898                va_end
+                0x000109e0                kprintf
+                0x00010a3c                ksprintf
+ .text          0x00011b54       0xf4 font.obj
+                0x00011b54                drawCharacter
+ .text          0x00011c48     0x1860 disk.obj
+                0x00011c48                disk_init
+                0x00011e04                isBusy
+                0x00011e2c                disk_read_sector
+                0x00011f3c                disk_write_sector
+                0x00012044                clusterNumberToSectorNumber
+                0x00012104                readCluster
+                0x00012194                directories
+                0x00012bd0                file_open
+                0x00012e18                file_close
+                0x00012f3c                stringEquals
+                0x0001306c                get_file
+                0x000131fc                file_read
+                0x00013450                file_write
+                0x0001347c                file_seek
+ .text          0x000134a8       0x90 utility.obj
+                0x000134a8                kmemcpy
+                0x0001352c                halt
+ .text          0x00013538     0x1024 testsuite.obj
+                0x00013538                readFully
+                0x000135ec                sweet
+ .text          0x0001455c      0x134 interrupt.obj
+                0x0001455c                interrupt_init
+                0x00014590                handler_reset
+                0x000145b0                handler_undefined
+                0x000145d0                handler_svc
+                0x000145f0                handler_prefetchabort
+                0x00014610                handler_dataabort
+                0x00014630                handler_reserved
+                0x00014650                handler_irq
+                0x00014670                handler_fiq
  *(.rodata)
- .rodata        0x0001436c     0x21a8 kernelc.obj
- .rodata        0x00016514     0x2005 console.obj
- *fill*         0x00018519        0x3 
- .rodata        0x0001851c       0x68 kprintf.obj
- .rodata        0x00018584     0x2000 font.obj
- .rodata        0x0001a584       0x2e disk.obj
- *fill*         0x0001a5b2        0x2 
- .rodata        0x0001a5b4      0xd38 testsuite.obj
- .rodata        0x0001b2ec       0x48 interrupt.obj
+ .rodata        0x00014690     0x2197 kernelc.obj
+ *fill*         0x00016827        0x1 
+ .rodata        0x00016828     0x2005 console.obj
+ *fill*         0x0001882d        0x3 
+ .rodata        0x00018830       0x68 kprintf.obj
+ .rodata        0x00018898     0x2000 font.obj
+ .rodata        0x0001a898       0x2e disk.obj
+ *fill*         0x0001a8c6        0x2 
+ .rodata        0x0001a8c8      0xd4c testsuite.obj
+ .rodata        0x0001b614       0x48 interrupt.obj
  *(.rdata)
  *(.rdata$zzz)
-                0x0001b334                etext = .
-                0x0001b334                _etext = .
+                0x0001b65c                etext = .
+                0x0001b65c                _etext = .
                 0x0001c000                . = ALIGN (ABSOLUTE (.), 0x1000)
- *fill*         0x0001b334      0xccc 
+ *fill*         0x0001b65c      0x9a4 
                 0x0001c000                _sdata = .
                 0x0001c000                sdata = .
  *(.data)
@@ -121,43 +123,44 @@ Linker script and memory map
                 0x000240f4                _sbss = .
                 0x000240f4                sbss = .
  *(COMMON)
- COMMON         0x000240f4      0x340 disk.obj
-                0x000240f4                fileTable
-                0x00024234                vbr
+ COMMON         0x000240f4      0x344 disk.obj
+                0x000240f4                fp
+                0x000240f8                fileTable
+                0x00024238                vbr
  *(.bss)
- .bss           0x00024434        0x0 kernelasm.obj
- .bss           0x00024434        0x0 kernelc.obj
- .bss           0x00024434        0xc console.obj
-                0x0002443c                escflag
- .bss           0x00024440        0x0 kprintf.obj
- .bss           0x00024440        0x0 font.obj
- .bss           0x00024440     0x1000 disk.obj
- .bss           0x00025440        0x0 utility.obj
- .bss           0x00025440        0x0 testsuite.obj
- .bss           0x00025440        0x0 interrupt.obj
-                0x00025440                _ebss = .
-                0x00025440                ebss = .
+ .bss           0x00024438        0x0 kernelasm.obj
+ .bss           0x00024438        0x0 kernelc.obj
+ .bss           0x00024438        0xc console.obj
+                0x00024440                escflag
+ .bss           0x00024444        0x0 kprintf.obj
+ .bss           0x00024444        0x0 font.obj
+ .bss           0x00024444     0x1000 disk.obj
+ .bss           0x00025444        0x0 utility.obj
+ .bss           0x00025444        0x0 testsuite.obj
+ .bss           0x00025444        0x0 interrupt.obj
+                0x00025444                _ebss = .
+                0x00025444                ebss = .
 
-.glue_7         0x00025440        0x0
- .glue_7        0x00025440        0x0 linker stubs
+.glue_7         0x00025444        0x0
+ .glue_7        0x00025444        0x0 linker stubs
 
-.glue_7t        0x00025440        0x0
- .glue_7t       0x00025440        0x0 linker stubs
+.glue_7t        0x00025444        0x0
+ .glue_7t       0x00025444        0x0 linker stubs
 
-.vfp11_veneer   0x00025440        0x0
- .vfp11_veneer  0x00025440        0x0 linker stubs
+.vfp11_veneer   0x00025444        0x0
+ .vfp11_veneer  0x00025444        0x0 linker stubs
 
-.v4_bx          0x00025440        0x0
- .v4_bx         0x00025440        0x0 linker stubs
+.v4_bx          0x00025444        0x0
+ .v4_bx         0x00025444        0x0 linker stubs
 
-.iplt           0x00025440        0x0
- .iplt          0x00025440        0x0 kernelasm.obj
+.iplt           0x00025444        0x0
+ .iplt          0x00025444        0x0 kernelasm.obj
 
-.igot.plt       0x00025440        0x0
- .igot.plt      0x00025440        0x0 kernelasm.obj
+.igot.plt       0x00025444        0x0
+ .igot.plt      0x00025444        0x0 kernelasm.obj
 
-.rel.dyn        0x00025440        0x0
- .rel.iplt      0x00025440        0x0 kernelasm.obj
+.rel.dyn        0x00025444        0x0
+ .rel.iplt      0x00025444        0x0 kernelasm.obj
 
 /DISCARD/
  *(.eh_frame)

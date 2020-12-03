@@ -31,7 +31,7 @@ void kmain(){
     clearBss();
     console_init();
     disk_init();
-    interrupt_init();
+    //interrupt_init();
     /*
     unsigned short black = 0x0000;
     unsigned short white = 0xffff;
@@ -69,10 +69,10 @@ void kmain(){
     
     //
     //directories();
-    /*
-    small files lab
+    
     sweet();
-    */
+    
+     /*
     #if INTERRUPT_TEST == 0
     kprintf("No test\n");
     #elif INTERRUPT_TEST == 1
@@ -82,7 +82,7 @@ void kmain(){
     kprintf("undefined test\n");
     asm volatile(".word 0xf7f0a000");
     #endif
-
+    */
     /*
     readCluster(3, clusterbuffer);
     kprintf("%.*s", 4096, clusterbuffer);

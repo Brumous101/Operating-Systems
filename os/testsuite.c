@@ -120,6 +120,7 @@ void sweet(){
     fd3 = file_open("article6.txt",0);
     if( fd1 < 0 || fd2 < 0 || fd3 < 0 ){
         kprintf("Could not open correctly!");
+        kprintf("%d %d %d", fd1, fd2, fd3);
         return;
     }
     
@@ -162,6 +163,11 @@ void sweet(){
             kprintf("so very wrong\n");
             return;
         }
+        
+        //KJ Test
+        //buf and buf2 are both empty
+        kprintf("%s %s", buf, buf2);
+
         for(i=0;i<nr1;++i){
             if( buf[i] != buf2[i] ){
                 kprintf("wrong! Wrong! WRONG!\n");
