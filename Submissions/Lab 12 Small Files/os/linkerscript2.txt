@@ -1,0 +1,56 @@
+ENTRY (start)
+SECTIONS {
+
+    /* The kernel will be loaded at this address in RAM.
+            The dot (.) means "the current location" */
+    . = 0x400000 ;
+    
+    .text : {
+
+        /* stext = start of text (read-only) section */
+        stext = .;
+        _stext = .;
+        
+        /* .text = program code. rodata and rdata = read-only data */
+        *(.text) 
+        *(.rodata)
+        *(.rdata)
+        *(.rdata$zzz)
+        
+        /* etext = end of text section */ 
+        etext = .;
+        _etext = .;
+
+        /* pad to a 4K boundary */
+        /*NOTE: NEED TO PUT THIS BACK IN IF WE ARE DOING 4K PAGES!!!*/
+        /* . = ALIGN( ABSOLUTE(.) , 0x1000 ); */
+
+        /* start of data (writable) section */
+        _sdata = .;
+        sdata = .;
+        
+        *(.data) 
+        
+        _edata = .;
+        edata = .;
+        /* end of data section */
+        
+        /* bss: Block Started by Symbol: Uninitialized data */
+        _sbss = . ; 
+        sbss = . ;
+        
+        *(COMMON) 
+        *(.bss)  
+        
+        _ebss = . ;
+        ebss = . ; 
+    }
+    
+    /DISCARD/ : {
+        *(.eh_frame)
+        *(.comment)
+    }
+    
+}
+
+        

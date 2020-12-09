@@ -11,7 +11,7 @@ def copy(fool):
 "cp","article2.txt","my fancy filename.txt",
 "cp","article3.txt","this is a really long filename.c",
 "cp","billofrights.txt","BILL.TXT",
-"cp","billofrights.txt","A334.TXT",
-"cp","billofrights.txt","a334c def ghij klmn opq.txt",
-"rm","article1.txt"
+"cp","billofrights.txt","A220.TXT",
+"cp","billofrights.txt","a220c def ghij klmn opq.txt",
+"rm","article2.txt"
 ])

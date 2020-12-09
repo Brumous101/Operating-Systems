@@ -1,0 +1,198 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+fp                  0x4               disk.obj
+fileTable           0x180             disk.obj
+vbr                 0x200             disk.obj
+
+Discarded input sections
+
+ .comment       0x00000000       0x7a kernelc.obj
+ .comment       0x00000000       0x7a console.obj
+ .comment       0x00000000       0x7a kprintf.obj
+ .comment       0x00000000       0x7a font.obj
+ .comment       0x00000000       0x7a disk.obj
+ .comment       0x00000000       0x7a utility.obj
+ .comment       0x00000000       0x7a testsuite.obj
+ .comment       0x00000000       0x7a interrupt.obj
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00010000                . = 0x10000
+
+.text           0x00010000    0x15484
+                0x00010000                stext = .
+                0x00010000                _stext = .
+ *(.text)
+ .text          0x00010000      0x128 kernelasm.obj
+                0x00010000                start
+                0x0001000c                interrupt_table_begin
+                0x0001004c                interrupt_table_end
+ .text          0x00010128       0xec kernelc.obj
+                0x00010128                clearBss
+                0x00010194                kmain
+ .text          0x00010214      0x648 console.obj
+                0x00010214                serial_outchar
+                0x0001026c                console_putc
+                0x0001050c                check_column_length
+                0x00010554                check_row_length
+                0x00010588                scroll
+                0x000105d8                console_init
+                0x00010630                setPixel
+                0x000106a8                draw_rectangle
+                0x000107b0                get_key
+                0x0001080c                console_clear_screen
+                0x00010840                gulp
+ .text          0x0001085c     0x12f8 kprintf.obj
+                0x00010898                va_end
+                0x000109e0                kprintf
+                0x00010a3c                ksprintf
+ .text          0x00011b54       0xf4 font.obj
+                0x00011b54                drawCharacter
+ .text          0x00011c48     0x19a8 disk.obj
+                0x00011c48                disk_init
+                0x00011e04                isBusy
+                0x00011e2c                disk_read_sector
+                0x00011f3c                disk_write_sector
+                0x00012044                clusterNumberToSectorNumber
+                0x00012104                readCluster
+                0x00012194                directories
+                0x00012bd0                file_open
+                0x00012ea4                file_close
+                0x00012ff0                stringEquals
+                0x00013120                get_file
+                0x000132b0                file_read
+                0x00013480                file_write
+                0x000134ac                file_seek
+ .text          0x000135f0       0x90 utility.obj
+                0x000135f0                kmemcpy
+                0x00013674                halt
+ .text          0x00013680      0xff4 testsuite.obj
+                0x00013680                readFully
+                0x00013734                sweet
+ .text          0x00014674      0x134 interrupt.obj
+                0x00014674                interrupt_init
+                0x000146a8                handler_reset
+                0x000146c8                handler_undefined
+                0x000146e8                handler_svc
+                0x00014708                handler_prefetchabort
+                0x00014728                handler_dataabort
+                0x00014748                handler_reserved
+                0x00014768                handler_irq
+                0x00014788                handler_fiq
+ *(.rodata)
+ .rodata        0x000147a8     0x2197 kernelc.obj
+ *fill*         0x0001693f        0x1 
+ .rodata        0x00016940     0x2005 console.obj
+ *fill*         0x00018945        0x3 
+ .rodata        0x00018948       0x68 kprintf.obj
+ .rodata        0x000189b0     0x2000 font.obj
+ .rodata        0x0001a9b0       0x2e disk.obj
+ *fill*         0x0001a9de        0x2 
+ .rodata        0x0001a9e0      0xd3c testsuite.obj
+ .rodata        0x0001b71c       0x48 interrupt.obj
+ *(.rdata)
+ *(.rdata$zzz)
+                0x0001b764                etext = .
+                0x0001b764                _etext = .
+                0x0001c000                . = ALIGN (ABSOLUTE (.), 0x1000)
+ *fill*         0x0001b764      0x89c 
+                0x0001c000                _sdata = .
+                0x0001c000                sdata = .
+ *(.data)
+ .data          0x0001c000     0x8000 kernelasm.obj
+ .data          0x00024000        0x4 kernelc.obj
+                0x00024000                declaration
+ .data          0x00024004        0x8 console.obj
+ .data          0x0002400c        0x0 kprintf.obj
+ .data          0x0002400c        0x0 font.obj
+ .data          0x0002400c        0x8 disk.obj
+                0x0002400c                de
+                0x00024010                le
+ .data          0x00024014        0x0 utility.obj
+ .data          0x00024014       0xe0 testsuite.obj
+ .data          0x000240f4        0x0 interrupt.obj
+                0x000240f4                _edata = .
+                0x000240f4                edata = .
+                0x000240f4                _sbss = .
+                0x000240f4                sbss = .
+ *(COMMON)
+ COMMON         0x000240f4      0x384 disk.obj
+                0x000240f4                fp
+                0x000240f8                fileTable
+                0x00024278                vbr
+ *(.bss)
+ .bss           0x00024478        0x0 kernelasm.obj
+ .bss           0x00024478        0x0 kernelc.obj
+ .bss           0x00024478        0xc console.obj
+                0x00024480                escflag
+ .bss           0x00024484        0x0 kprintf.obj
+ .bss           0x00024484        0x0 font.obj
+ .bss           0x00024484     0x1000 disk.obj
+ .bss           0x00025484        0x0 utility.obj
+ .bss           0x00025484        0x0 testsuite.obj
+ .bss           0x00025484        0x0 interrupt.obj
+                0x00025484                _ebss = .
+                0x00025484                ebss = .
+
+.glue_7         0x00025484        0x0
+ .glue_7        0x00025484        0x0 linker stubs
+
+.glue_7t        0x00025484        0x0
+ .glue_7t       0x00025484        0x0 linker stubs
+
+.vfp11_veneer   0x00025484        0x0
+ .vfp11_veneer  0x00025484        0x0 linker stubs
+
+.v4_bx          0x00025484        0x0
+ .v4_bx         0x00025484        0x0 linker stubs
+
+.iplt           0x00025484        0x0
+ .iplt          0x00025484        0x0 kernelasm.obj
+
+.igot.plt       0x00025484        0x0
+ .igot.plt      0x00025484        0x0 kernelasm.obj
+
+.rel.dyn        0x00025484        0x0
+ .rel.iplt      0x00025484        0x0 kernelasm.obj
+
+/DISCARD/
+ *(.eh_frame)
+ *(.comment)
+LOAD kernelasm.obj
+LOAD kernelc.obj
+LOAD console.obj
+LOAD kprintf.obj
+LOAD font.obj
+LOAD disk.obj
+LOAD utility.obj
+LOAD testsuite.obj
+LOAD interrupt.obj
+OUTPUT(kernel.exe elf32-littlearm)
+
+.ARM.attributes
+                0x00000000       0x28
+ .ARM.attributes
+                0x00000000       0x1c kernelasm.obj
+ .ARM.attributes
+                0x0000001c       0x2c kernelc.obj
+ .ARM.attributes
+                0x00000048       0x2c console.obj
+ .ARM.attributes
+                0x00000074       0x2c kprintf.obj
+ .ARM.attributes
+                0x000000a0       0x2c font.obj
+ .ARM.attributes
+                0x000000cc       0x2c disk.obj
+ .ARM.attributes
+                0x000000f8       0x2c utility.obj
+ .ARM.attributes
+                0x00000124       0x2c testsuite.obj
+ .ARM.attributes
+                0x00000150       0x2c interrupt.obj
