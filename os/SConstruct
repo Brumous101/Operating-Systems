@@ -22,7 +22,7 @@ def makeDisk():
     #fool.go( ["hd.img","ls" ])
 
 #our source files
-sourcefiles = [ "kernelasm.s", "kernelc.c", "console.c", "kprintf.c", "font.c", "disk.c", "utility.c", "testsuite.c", "interrupt.c", "exec.c"]
+sourcefiles = [ "kernelasm.s", "kernelc.c", "console.c", "kprintf.c", "font.c", "disk.c", "utility.c", "testsuite.c", "interrupt.c", "exec.c", "syscall.c"]
 
 # c compiler
 cc = os.path.abspath( os.path.join("..","gcc","bin","arm-none-eabi-gcc") )

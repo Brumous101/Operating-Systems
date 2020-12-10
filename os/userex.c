@@ -1,3 +1,5 @@
+#include "syscalldefs.h"
+
 static volatile unsigned* serialport = (unsigned*) 0x16000000;
 static volatile unsigned* serialflags = (unsigned*) 0x16000018;
 
@@ -25,15 +27,28 @@ void print_hex(unsigned x){
     }
 }
 
+int make_syscall(unsigned req, unsigned p1, unsigned p2, unsigned p3){
+    register unsigned tmp0 asm ("r0");
+    register unsigned tmp1 asm ("r1");
+    register unsigned tmp2 asm ("r2");
+    register unsigned tmp3 asm ("r3");
+    tmp0=req;
+    tmp1=p1;
+    tmp2=p2;
+    tmp3=p3;
+    asm volatile(
+          "svc #42"
+        : "+r"(tmp0)
+        : "r"(tmp1), "r"(tmp2), "r"(tmp3)
+        : "memory","cc");
+    return tmp0;
+}
+
 int main(int argc, char* argv[])
 {
-    void *p = print;
-    print("Hello from userland!\nI am at address ");
-    print_hex((unsigned)p);
-    print("\n");
-    
+    make_syscall(SYSCALL_TEST,0,0,0);
+    make_syscall(SYSCALL_TEST,10,20,30);
     while(1){
     }
-    
     return 0;
 }

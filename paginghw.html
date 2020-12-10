@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)file:///C:/Users/Brumo/Downloads/paginghw.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<style>
+input.bad {
+    background-color: red;
+    color: white;
+}
+
+input.good {
+    background-color: rgb(192,255,192);
+}
+
+input.ok {
+    background-color: rgb( 255,255,192);
+}
+
+input {
+    background-color: white;
+    border: 1px solid black;
+}
+
+table.pagetable {
+    border-collapse: collapse;
+    font-family: Courier;
+}
+table.pagetable td {
+    border: 1px solid black;
+    text-align: center;
+}
+td.offset {
+    background: grey;
+}
+td.empty {
+    background: grey;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+</style>
+
+</head>
+<body onload="main()">
+
+<div id="content"><div style="float: right;"><div>Page table:</div><table class="pagetable"><tbody><tr><td class="offset">0</td><td>0x58</td><td>0x5b</td><td>0x53</td><td>0x3d</td><td class="empty">~</td><td>0x33</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">8</td><td class="empty">~</td><td>0x2</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x15</td><td>0x11</td><td class="empty">~</td></tr><tr><td class="offset">16</td><td class="empty">~</td><td>0x72</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x31</td><td class="empty">~</td><td>0x70</td></tr><tr><td class="offset">24</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x6</td><td>0x37</td><td>0x77</td></tr><tr><td class="offset">32</td><td>0x28</td><td class="empty">~</td><td>0x7f</td><td>0x52</td><td class="empty">~</td><td>0x1a</td><td>0x4e</td><td>0x14</td></tr><tr><td class="offset">40</td><td>0x61</td><td>0x7c</td><td>0x69</td><td class="empty">~</td><td class="empty">~</td><td>0x5e</td><td class="empty">~</td><td>0x44</td></tr><tr><td class="offset">48</td><td class="empty">~</td><td>0x65</td><td class="empty">~</td><td>0x4c</td><td>0xd</td><td class="empty">~</td><td class="empty">~</td><td>0x22</td></tr><tr><td class="offset">56</td><td class="empty">~</td><td>0x79</td><td>0x4a</td><td>0x7a</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">64</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">72</td><td class="empty">~</td><td>0x7d</td><td>0x50</td><td>0x10</td><td>0x13</td><td>0x7</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">80</td><td>0x66</td><td class="empty">~</td><td>0x6c</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x63</td><td class="empty">~</td></tr><tr><td class="offset">88</td><td class="empty">~</td><td class="empty">~</td><td>0xf</td><td>0x3e</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">96</td><td class="empty">~</td><td>0x19</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x38</td><td class="empty">~</td><td>0x3f</td></tr><tr><td class="offset">104</td><td class="empty">~</td><td>0x7b</td><td>0x76</td><td class="empty">~</td><td>0xb</td><td class="empty">~</td><td>0x0</td><td>0x34</td></tr><tr><td class="offset">112</td><td class="empty">~</td><td class="empty">~</td><td>0x20</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x5a</td><td class="empty">~</td></tr><tr><td class="offset">120</td><td>0x21</td><td>0x54</td><td>0x30</td><td class="empty">~</td><td>0x56</td><td>0x35</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">128</td><td class="empty">~</td><td>0x27</td><td>0x6d</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x71</td></tr><tr><td class="offset">136</td><td>0x12</td><td class="empty">~</td><td class="empty">~</td><td>0x24</td><td>0x41</td><td>0x59</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">144</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x51</td><td class="empty">~</td><td class="empty">~</td><td>0x47</td><td class="empty">~</td></tr><tr><td class="offset">152</td><td>0x67</td><td class="empty">~</td><td class="empty">~</td><td>0x64</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">160</td><td>0x1e</td><td class="empty">~</td><td>0x2c</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x16</td></tr><tr><td class="offset">168</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x68</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">176</td><td>0x25</td><td>0x6a</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x8</td></tr><tr><td class="offset">184</td><td class="empty">~</td><td>0x1c</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x3b</td><td class="empty">~</td><td>0x29</td></tr><tr><td class="offset">192</td><td>0x4</td><td class="empty">~</td><td class="empty">~</td><td>0x48</td><td>0x23</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">200</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x1</td><td>0x6e</td><td>0x75</td><td class="empty">~</td></tr><tr><td class="offset">208</td><td class="empty">~</td><td>0x6b</td><td class="empty">~</td><td class="empty">~</td><td>0x46</td><td class="empty">~</td><td class="empty">~</td><td>0x42</td></tr><tr><td class="offset">216</td><td class="empty">~</td><td>0x4f</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x49</td></tr><tr><td class="offset">224</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0xc</td><td class="empty">~</td><td>0x43</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">232</td><td class="empty">~</td><td class="empty">~</td><td>0x5c</td><td>0x2a</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x2e</td></tr><tr><td class="offset">240</td><td class="empty">~</td><td>0x2f</td><td class="empty">~</td><td class="empty">~</td><td class="empty">~</td><td>0x57</td><td class="empty">~</td><td class="empty">~</td></tr><tr><td class="offset">248</td><td>0xe</td><td class="empty">~</td><td class="empty">~</td><td>0x60</td><td>0x32</td><td>0x1d</td><td>0x45</td><td>0x9</td></tr></tbody></table></div><div>Virtual address size:<input size="5">bits <span></span></div><div>Virtual address space size: 32768 bytes</div><div>Physical address size:<input size="5">bits <span></span></div><div>Physical address space size: 16384 bytes</div><div>Page/Frame size:<input size="5">bytes <span></span></div><div>Page/Frame offset: 7 bits</div><div>Number of frames:<input size="5"> <span></span></div><div>What is the physical address for virtual address 0x4492? (Use 'none' if no such address)<input size="5"> <span></span></div><div><button>Check!</button><button>Show Answers</button><button>New Problem</button></div></div>
+
+<script>
+"use strict";
+
+//icons created with inkscape, based on icons from t. icon set
+var x_svg = [
+'<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="14.575" width="18.056" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">',
+'<metadata><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>',
+'<dc:title/></cc:Work></rdf:RDF></metadata><g transform="translate(-539.50477,-579.38342)">',
+'<g stroke-linejoin="round" stroke="#C00" stroke-linecap="round" stroke-miterlimit="4" fill-rule="nonzero" stroke-dasharray="none" fill="#C00" transform="matrix(0.751031,0,0,0.764054,534.63335,573.58155)" stroke-dashoffset="0">',
+'<path style="color:#000000;" stroke-width="2.64021659" d="m11.319,9.2241c5.3233,5.469,11.451,9.8996,17.892,13.707l-1.7691,1.2287c-6.34-4.115-12.389-8.661-18.258-13.508l2.1349-1.4279z"/>',
+'<path style="color:#000000;" stroke-width="2.64021564" d="M26.739,8.9211c-4.871,7.0319-11.492,12.16-18.832,16.361l2.1815-1.761c-1.3639,0.858,15.486-11.717,13.764-13.313l2.887-1.2869z"/>',
+'</g></g></svg>(incorrect)'];
+x_svg = x_svg.join("\n");
+
+var check_svg = [
+'<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="14.664" width="21.995" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">',
+'<metadata><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>',
+'<dc:title/></cc:Work></rdf:RDF></metadata>',
+'<g stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" fill-rule="nonzero" stroke-dasharray="none" transform="translate(-548.49074,-578.49986)" stroke-dashoffset="0">',
+'<path style="color:#000000;" fill="#C00" stroke="#0c9c00" stroke-width="2.00000238" d="m551.09,586.19c1.9777,2.7896,3.1702,3.6495,5.4825,5.0434l-1.3286,0.93882c-1.4783-0.74493-3.7487-2.4505-5.757-4.8911z"/>',
+'<path style="color:#000000;" fill="#00cc16" stroke="#0b9d00" stroke-width="2.00000167" d="m569.49,579.51c-3.6585,5.3724-8.6305,9.291-14.144,12.5l1.638-1.3453c-1.024,0.6559,11.631-8.9522,10.338-10.172l2.1681-0.98322z"/>',
+'</g></svg>(ok)'];
+check_svg = check_svg.join("\n");
+
+var exclam_svg = [
+'<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="15.824" width="13.815" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/">',
+'<defs>',
+'<radialGradient id="radialGradient3107" cx="17.312" gradientUnits="userSpaceOnUse" cy="25.531" r="9.6875" gradientTransform="matrix(1,0,0,0.351613,0,16.55413)">',
+'<stop stop-color="#000" offset="0"/>',
+'<stop stop-color="#000" stop-opacity="0" offset="1"/>',
+'</radialGradient>',
+'</defs>',
+'<metadata>',
+'<rdf:RDF>',
+'<cc:Work rdf:about="">',
+'<dc:format>image/svg+xml</dc:format>',
+'<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>',
+'<dc:title/>',
+'</cc:Work>',
+'</rdf:RDF>',
+'</metadata>',
+'<g transform="translate(-113.09102,-424.44797)">',
+'<g transform="matrix(0.32499174,0,0,0.32499174,112.10331,424.40652)">',
+'<path opacity="0.40909095" style="color:#000000;" d="m27,25.531c0,1.8812-4.3372,3.4062-9.6875,3.4062s-9.6875-1.525-9.6875-3.4062,4.3372-3.4062,9.6875-3.4062,9.6875,1.525,9.6875,3.4062z" fill-rule="nonzero" transform="matrix(2.182912,0,0,2.182912,-13.50372,-14.35012)" fill="url(#radialGradient3107)"/>',
+'<path stroke-linejoin="round" d="m46.139,23.428c0,11.716-9.8536,21.213-22.009,21.213s-22.009-9.4975-22.009-21.213,9.8536-21.213,22.009-21.213,22.009,9.4975,22.009,21.213z" fill-rule="nonzero" transform="matrix(0.94463,0,0,0.980053,1.504174,-1.556912)" stroke-dashoffset="0" stroke="#914900" stroke-linecap="round" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="0.98214942" fill="#f57900"/>',
+'<path stroke-linejoin="round" d="m46.139,23.428c0,11.716-9.8536,21.213-22.009,21.213s-22.009-9.4975-22.009-21.213,9.8536-21.213,22.009-21.213,22.009,9.4975,22.009,21.213z" transform="matrix(0.914086,0,0,0.948364,2.380576,-0.905815)" stroke-dashoffset="0" stroke="#fcaf3e" stroke-linecap="round" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="0.98214942" fill="none"/>',
+'<path fill-rule="nonzero" fill="#FFF" d="m21.465,10.373c-0.12797,0-0.23461,0.17449-0.23461,0.38391l1.0648,14.441c0,0.20941,0.10664,0.38391,0.23461,0.38391,0,0,0.84082,0.0119,1.534,0,0.22834-0.0039,0.29821,0.02031,0.50531,0,0.69317,0.0119,1.534,0,1.534,0,0.12797,0,0.23461-0.1745,0.23461-0.38391l1.0648-14.441c0-0.20941-0.10664-0.35438-0.23461-0.35438h-2.5807c-0.0095-0.0019-0.0082-0.02953-0.01805-0.02953h-3.1041z"/>',
+'<path d="m-11.875,34.062c0,2.1056-2.0427,3.8125-4.5625,3.8125s-4.5625-1.7069-4.5625-3.8125,2.0427-3.8125,4.5625-3.8125,4.5625,1.7069,4.5625,3.8125z" fill-rule="nonzero" transform="matrix(0.504864,0,0,0.604182,32.65935,9.608845)" fill="#FFF"/>',
+'<path d="m43.676,20.477c0,10.831-6.0522-4.3062-18.675,0.38639-12.722,4.73-20.566,10.444-20.566-0.386,0-10.831,8.7899-19.621,19.621-19.621s19.621,8.7901,19.621,19.621z" fill-opacity="0.21390375" fill-rule="nonzero" fill="#fffeff"/>',
+'</g>',
+'</g>',
+'</svg>(incorrect)'
+]
+exclam_svg = exclam_svg.join("\n");
+
+function randrange(a,b){
+    if( b === undefined ){
+        b=a;
+        a=0;
+    }
+    
+    var m = Math.random();
+    var r = a + m * (b-a);
+    r = Math.floor(r);
+    if( r === b )
+        r--;
+    return r;
+}
+
+function shuffle(L){
+    for(var i=0;i<L.length;++i){
+        var j = randrange(0,L.length);
+        var tmp = L[i];
+        L[i]=L[j];
+        L[j]=tmp;
+    }
+}
+
+function max(a,b){
+    return (a>b)?a:b;
+}
+
+var checkers=[];
+ 
+function text(){
+    var s = "";
+    for(var i=0;i<arguments.length;++i){
+        if(s != 0)
+            s += " ";
+        s += arguments[i];
+    }
+    var t = document.createTextNode(s);
+    var div = document.createElement("div");
+    div.appendChild(t);
+    document.getElementById("content").appendChild(div);
+}
+
+function question(pre,value,post,preferhex){
+    var div = document.createElement("div");
+    div.appendChild( document.createTextNode(pre) );
+    var inp = document.createElement("input");
+    div.appendChild(inp);
+    inp.size = 5;
+    div.appendChild(document.createTextNode(post));
+    div.appendChild(document.createTextNode(" "));
+    var img = document.createElement("span");
+    div.appendChild(img);
+    document.getElementById("content").appendChild(div);
+    checkers.push( function(setanswer){
+        var v = inp.value;
+        v=parseInt(v);
+        if( v === value || (value==="none" && inp.value === "none") ){
+            inp.className = "good";
+            img.innerHTML=check_svg;
+        }
+        else{
+            if( setanswer ){
+                inp.className="ok";
+                if( value === "none" )
+                    inp.value="none";
+                else if(preferhex)
+                    inp.value="0x"+value.toString(16);
+                else
+                    inp.value=value;
+                img.innerHTML=exclam_svg;
+            }
+            else{
+                inp.className = "bad";
+                img.innerHTML=x_svg;
+            }
+        }
+    });
+}
+
+
+function main(){
+    var va_bits = randrange(14,17);
+    var offset_bits = randrange(7,va_bits-2);
+    var pa_bits = offset_bits + randrange(3,8);
+    var pa_bits = max(va_bits-3,pa_bits);
+    
+    var vspace_size = 1<<va_bits;
+    var pspace_size = 1<<pa_bits;
+    var pg_size = 1<<offset_bits ;
+    var pgtable_entries = 1<<(va_bits-offset_bits);
+    var numframes = 1 << (pa_bits - offset_bits);
+
+    var pgtable=[];
+    var canbevacant = Math.floor(0.25*pgtable_entries);
+    for(var i=0;i<pgtable_entries;++i){
+        if(i >= numframes)
+            pgtable.push(undefined);
+        else if( canbevacant > 0 && randrange(4) === 0){
+            canbevacant -= 1;
+            pgtable.push(undefined);
+        }
+        else
+            pgtable.push(i);
+    }
+    
+    shuffle(pgtable);
+    
+    
+    var ptdiv = document.createElement("div");
+    document.getElementById("content").appendChild(ptdiv);
+    ptdiv.style.float="right";
+
+
+    if( randrange(2) ){
+        text("Virtual address size:",va_bits,"bits");
+        question("Virtual address space size:",vspace_size,"bytes");
+    }
+    else{
+        question("Virtual address size:",va_bits,"bits")
+        text("Virtual address space size:",vspace_size,"bytes")
+    }
+
+    if(randrange(2)){
+        text("Physical address size:",pa_bits,"bits");
+        question("Physical address space size:",pspace_size,"bytes");
+    }
+    else{
+        question("Physical address size:",pa_bits,"bits");
+        text("Physical address space size:",pspace_size,"bytes");
+    }
+    
+    if( randrange(2)){
+        text("Page/Frame size:",pg_size,"bytes")
+        question("Page/Frame Offset:",offset_bits,"bits")
+    }
+    else{
+        question("Page/Frame size:",pg_size,"bytes")
+        text("Page/Frame offset:",offset_bits,"bits")
+    }   
+    
+    question("Number of frames:",numframes,"");
+    
+    
+    var div = document.createElement("div");
+    div.appendChild(document.createTextNode("Page table:"));
+    ptdiv.appendChild(div);
+    
+    var T = document.createElement("table");
+    ptdiv.appendChild(T);
+    T.className="pagetable";
+    var R;
+    var C;
+    for(var i=0;i<pgtable.length;++i){
+        if( i % 8  === 0 ){
+            //http://www.redips.net/javascript/adding-table-rows-and-columns/
+            R = T.insertRow(-1);
+            if( pgtable.length > 8 ){
+                C = R.insertCell(-1);
+                C.className = "offset";
+                C.appendChild(document.createTextNode(""+i));
+            }
+        }
+        C = R.insertCell(-1);
+        if( pgtable[i] === undefined ){
+            C.appendChild(document.createTextNode("~"));
+            C.className="empty";
+        }
+        else{
+            var tmp = pgtable[i].toString(16);
+            C.appendChild(document.createTextNode("0x"+tmp));
+        }
+    }
+        
+    var va=randrange(0,vspace_size)
+    var pi = va >> offset_bits
+    var of = va & ((1<<offset_bits)-1)
+    var fn = pgtable[pi]
+    var pa;
+    if( fn === undefined )
+        pa="none";
+    else
+        pa = (fn << offset_bits) | of;
+
+    question("What is the physical address for virtual address 0x"+ va.toString(16)+"? (Use 'none' if no such address)",pa,"",true);
+    
+    var check = document.createElement("button");
+    check.appendChild(document.createTextNode("Check!"));
+    check.addEventListener("click",function(){
+        for(var i=0;i<checkers.length;++i){
+            checkers[i]();
+        }
+    });
+    var div = document.createElement("div");
+    
+    var newp = document.createElement("button");
+    newp.appendChild(document.createTextNode("New Problem"));
+    newp.addEventListener("click",function(){
+        checkers=[];
+        var e = document.getElementById("content");
+        while( e.children.length > 0 ){
+            e.removeChild(e.children[0]);
+        }
+        main();
+    });
+    
+    var showa = document.createElement("button");
+    showa.appendChild(document.createTextNode("Show Answers"));
+    showa.addEventListener("click",function(){
+        for(var i=0;i<checkers.length;++i){
+            checkers[i](true);
+        }
+        check.disabled=true; 
+        showa.disabled=true;
+    });
+    
+    div.appendChild(check);
+    div.appendChild(showa);
+    div.appendChild(newp);
+
+    document.getElementById("content").appendChild(div);
+    
+}
+</script>
+
+
+
+</body></html>
